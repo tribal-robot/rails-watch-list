@@ -1,0 +1,16 @@
+<div class="container">
+
+  <h1><%= @list.name %></h1>
+
+  <% @list.movies.each do |movie| %>
+    <% movie_bookmark = movie.bookmarks.select { |bookmark| bookmark.list_id == @list.id }.first %>
+
+    <h5><%= movie.title %></h5>
+    <p><%= movie_bookmark.comment %></p>
+    <p><%= link_to 'delete movie', bookmark_path(movie_bookmark.id), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, style: "color: red" %></p>
+    <br>
+  <% end %>
+
+  <%= link_to 'Add a movie to this list', new_list_bookmark_path(@list) %>
+
+</div>
