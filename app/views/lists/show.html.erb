@@ -1,15 +1,33 @@
-<div class="container">
+<div class="banner" style="background-image: url(<%= @list.image_url %>)">
+  <h1 class="heading"><%= @list.name %></h1>
+</div>
 
-  <h1><%= @list.name %></h1>
+<div class="container mt-5">
 
-  <% @list.movies.each do |movie| %>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+
+    <% @list.movies.each do |movie| %>
     <% movie_bookmark = movie.bookmarks.select { |bookmark| bookmark.list_id == @list.id }.first %>
 
-    <h5><%= movie.title %></h5>
-    <p><%= movie_bookmark.comment %></p>
-    <p><%= link_to 'delete movie', bookmark_path(movie_bookmark.id), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, style: "color: red" %></p>
-    <br>
-  <% end %>
+      <div class="col">
+        <div class="card h-100 list-card text-left mb-3" style="width: 18rem;">
+          <img src="<%= movie.poster_url %>" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5><%= movie.title %></h5>
+            <div class="card-text">
+              <p><%= movie_bookmark.comment %></p>
+            </div>
+          </div>
+          <div class="card-bottom d-flex justify-content-between">
+            <p class="mx-2">Rating: <%= movie.rating %></p>
+            <div class="card-actions text-end">
+            <p><%= link_to 'delete movie', bookmark_path(movie_bookmark.id), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "px-2", style: "color: red" %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
   <%= link_to 'Add a movie to this list', new_list_bookmark_path(@list) %>
 
