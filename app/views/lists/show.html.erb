@@ -9,26 +9,26 @@
     <% @list.movies.each do |movie| %>
     <% movie_bookmark = movie.bookmarks.select { |bookmark| bookmark.list_id == @list.id }.first %>
 
-      <div class="col">
+      <div class="col d-flex justify-content-center">
         <div class="card h-100 list-card text-left mb-3" style="width: 18rem;">
           <img src="<%= movie.poster_url %>" class="card-img-top" alt="...">
           <div class="card-body">
             <h5><%= movie.title %></h5>
-            <div class="card-text">
-              <p><%= movie_bookmark.comment %></p>
+            <div class="card-text text-end">
+              <p>"<%= movie_bookmark.comment %>"</p>
             </div>
           </div>
-          <div class="card-bottom d-flex justify-content-between">
-            <p class="mx-2">Rating: <%= movie.rating %></p>
-            <div class="card-actions text-end">
-            <p><%= link_to 'delete movie', bookmark_path(movie_bookmark.id), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "px-2", style: "color: red" %></p>
-            </div>
+          <div class="card-bottom d-flex align-items-center justify-content-between p-3">
+            <p class="my-0">Rating: <%= movie.rating %></p>
+            <%= link_to 'delete movie', bookmark_path(movie_bookmark.id), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, style: "color: red" %>
           </div>
         </div>
       </div>
     <% end %>
   </div>
 
-  <%= link_to 'Add a movie to this list', new_list_bookmark_path(@list) %>
+  <div class="container d-flex align-items-center justify-content-center">
+    <%= link_to 'Add a movie to this list', new_list_bookmark_path(@list), class: "btn btn-outline-primary m-5" %>
+  </div>
 
 </div>
